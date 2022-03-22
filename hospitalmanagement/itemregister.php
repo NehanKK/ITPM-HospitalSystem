@@ -51,7 +51,7 @@ include "db_connect.php";
                     <div class="col-lg-8 p-r-0 title-margin-right">
                         <div class="page-header">
                             <div class="page-title">
-                                <h1><span>DashBoard</span></h1>
+                                <h1><span>Item Register</span></h1>
                             </div>
                         </div>
                     </div><!-- /# column -->
@@ -59,18 +59,66 @@ include "db_connect.php";
                         <div class="page-header">
                             <div class="page-title">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#"></a></li>
-                                    <li class="breadcrumb-item active"></li>
+                                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                                    <li class="breadcrumb-item active">Item Register</li>
                                 </ol>
                             </div>
                         </div>
                     </div><!-- /# column -->
                 </div>
-               
+                <!-- methana indan thamai oyalage individual code tika ptan ganna -->
                 <div id="color" style="background: linear-gradient(to right,#b6ebfc ,#33ccff);">
     <div class="row"style="" >
- </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+          <label>Item Name</label>
+            <select name="itemname" id="itemname" class="form-control" onchange="openbox()">
+                                                                  
+                                                  <option  selected="selected">- Please Select -</option>
+                                                  <?php
+                                                    $re_inv = mysqli_query($con,"SELECT id,itemName FROM item");
+                                                    while ($row_inv = mysqli_fetch_assoc($re_inv)) {
+                                                        ?><option value = "<?php echo $row_inv['id'];?>" ><?php echo$row_inv['itemName'];?></option><?php
+                                                    }
+                                                  ?>
+                                                </select>
+      </div>
+      <div class="col-sm-6 col-md-6 col-lg-6">
+        <label>Item Code</label>
+        <input type="text" name="icode" id="icode" class="form-control" readonly>
+      </div>
 
+</div>
+    <div class="row"style="margin-top: 2%;" >
+        <div class="col-sm-6 col-md-6 col-lg-6">
+          <label>Item Price (Rs.)</label>
+       <input type="text" name="iprice" id="iprice" class="form-control">
+      </div>
+      <div class="col-sm-6 col-md-6 col-lg-6">
+        <label>Rack No.</label>
+        <input type="text" name="rno" id="rno" class="form-control">
+      </div>
+
+</div>
+    <div class="row"style="margin-top: 2%;" >
+        <div class="col-sm-6 col-md-6 col-lg-6">
+          <label>Usage Details</label>
+ <textarea class="form-control" id="tarea" name="tarea" rows="30" style="height:100px"></textarea>
+       </div>
+      <div class="col-sm-6 col-md-6 col-lg-6">
+      
+      </div>
+
+</div>
+    <div class="row"style="margin-top: 2%;" align="center" >
+        <div class="col-sm-4 col-md-4 col-lg-4" align="center">
+      <button type="button" class="btn btn-success">SUBMIT</button>
+
+       </div>
+ 
+
+</div>
+</div>
+<!-- methanata enakam  -->
 </div>
 
 

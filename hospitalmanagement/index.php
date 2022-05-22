@@ -1,6 +1,17 @@
 <?php 
 session_start();
 include "db_connect.php";
+
+// $sqlitem = mysqli_query($con,"SELECT MAX(itemCode) AS max_value FROM item ");
+// $resultitem = mysqli_fetch_assoc($sqlitem);
+//     $max_itemid = $resultitem["max_value"];
+//     if ($max_itemid <= 0) {
+//         $itemcode = '1001';
+//         // $newitemid = 'MED'.$itemcode;
+//     } else {
+//         $itemcode = $max_itemid+1;
+//         // $newitemid = $itemcode;
+//     }
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -33,17 +44,53 @@ include "db_connect.php";
     <link href="assets/css/lib/helper.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
 </head>
+<script type="text/javascript">
+function getXmlHttpRequestObject() {
+    if (window.XMLHttpRequest) {
+        return new XMLHttpRequest();
+    }
+    else if(window.ActiveXObject) {
+        return new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    else {
+    }
+}
+    function submitdet(){
+        var uname = document.getElementById('uname').value;
+        var pward = document.getElementById('pward').value;
+
+    var formData = new FormData();
+            formData.append('uname', uname);
+            formData.append('pward', pward);
+
+     var req = getXmlHttpRequestObject(); // fuction to get xmlhttp object
+                    if (req) {
+                        req.onreadystatechange = function() {
+                    if (req.readyState == 4) { //data is retrieved from server
+                        if (req.status == 200) { // which reprents ok status 
+                           if (req.responseText=='yes') {
+                            window.location.href = "http://localhost/ITPM-HospitalSystem-main/Sprint2_sourcefile_hospitalmanagement/dashboard.php";
+                           }else{
+                            alert(req.responseText);
+                           }
+                       
+                    }            
+                } 
+            } 
+                req.open("POST", 'login_det_submit.php', true); //open url using get method, get_GrnBill.php
+                req.send(formData); 
+            }
+        }
+        
+</script>
 
 <body>
 
-    <?php include 'sidemenu.php' ?>
-    <!-- /# sidebar -->
 
-<?php include 'header.php' ?>
 
 
     <div class="content-wrap">
-        <div class="main">
+        <div class="main"style="background: linear-gradient(to right,#b6ebfc ,#33ccff);">
            
                <div class="container-fluid">
   <div class="col-sm-12 col-md-12 col-lg-12">
@@ -51,26 +98,64 @@ include "db_connect.php";
                     <div class="col-lg-8 p-r-0 title-margin-right">
                         <div class="page-header">
                             <div class="page-title">
-                                <h1><span>DashBoard</span></h1>
+                               
                             </div>
                         </div>
                     </div><!-- /# column -->
                     <div class="col-lg-4 p-l-0 title-margin-left">
                         <div class="page-header">
                             <div class="page-title">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#"></a></li>
-                                    <li class="breadcrumb-item active"></li>
-                                </ol>
+                          <!--       <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                                    <li class="breadcrumb-item active">Item Register</li> -->
+                            <!--     </ol> -->
                             </div>
                         </div>
                     </div><!-- /# column -->
                 </div>
-               
-                <div id="color" style="background: linear-gradient(to right,#b6ebfc ,#33ccff);">
-    <div class="row"style="" >
- </div>
+                <!-- methana indan thamai oyalage individual code tika ptan ganna -->
+                <div id="color" >
+    <div class="row" >
+        <div class="col-sm-4 col-md-4 col-lg-4" align="right">
+        <label>User Name</label>
+      </div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+        <input type="text" name="uname" id="uname" class="form-control" placeholder="@enter the username">
+      </div>
+    </div>
+     <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-4" align="right">
+        <label>Passward</label>
+      </div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+        <input type="password" name="pward" id="pward" class="form-control" placeholder="@enter the passward">
+      </div>
+    </div>
+ <div class="row"style="margin-top: 2%;" align="center" >
+    <div class="col-sm-4 col-md-4 col-lg-4" align="center">
 
+       </div>
+        <div class="col-sm-4 col-md-4 col-lg-4" align="center">
+      <button type="button" class="btn btn-success" style="width:100%" onclick="submitdet()">Login</button>
+       </div>
+ 
+</div>
+ <div class="row"style="margin-top: 2%;" align="center" >
+    <div class="col-sm-4 col-md-4 col-lg-4" align="center">
+
+       </div>
+        <div class="col-sm-4 col-md-4 col-lg-4" align="center">
+  
+      <label>Not a Member Yet  <a href="user_reg.php">Sign Up</a></label>
+       </div>
+ 
+</div>
+  
+   
+
+</div>
+</div>
+<!-- methanata enakam  -->
 </div>
 
 

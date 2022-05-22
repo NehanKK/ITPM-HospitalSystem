@@ -1,6 +1,17 @@
 <?php 
 session_start();
 include "db_connect.php";
+
+$sqlitem = mysqli_query($con,"SELECT MAX(itemCode) AS max_value FROM item ");
+$resultitem = mysqli_fetch_assoc($sqlitem);
+    $max_itemid = $resultitem["max_value"];
+    if ($max_itemid <= 0) {
+        $itemcode = '1001';
+        // $newitemid = 'MED'.$itemcode;
+    } else {
+        $itemcode = $max_itemid+1;
+        // $newitemid = $itemcode;
+    }
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -33,6 +44,47 @@ include "db_connect.php";
     <link href="assets/css/lib/helper.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
 </head>
+<script type="text/javascript">
+function getXmlHttpRequestObject() {
+    if (window.XMLHttpRequest) {
+        return new XMLHttpRequest();
+    }
+    else if(window.ActiveXObject) {
+        return new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    else {
+    }
+}
+    function submitdet(){
+        var itemname = document.getElementById('itemname').value;
+        var icode = document.getElementById('icode').value;
+        var iprice = document.getElementById('iprice').value;
+        var rno = document.getElementById('rno').value;
+        var tarea = document.getElementById('tarea').value;
+    var formData = new FormData();
+            formData.append('itemname', itemname);
+            formData.append('icode', icode);
+            formData.append('iprice', iprice);
+            formData.append('rno', rno);
+            formData.append('tarea', tarea);
+     var req = getXmlHttpRequestObject(); // fuction to get xmlhttp object
+                    if (req) {
+                        req.onreadystatechange = function() {
+                    if (req.readyState == 4) { //data is retrieved from server
+                        if (req.status == 200) { // which reprents ok status 
+                           alert(req.responseText);
+                            // document.getElementById('gramaNiladhari').innerHTML = req.responseText;
+                          location.reload();
+                       
+                    }            
+                } 
+            } 
+                req.open("POST", 'item_det_submit.php', true); //open url using get method, get_GrnBill.php
+                req.send(formData); 
+            }
+        }
+        
+</script>
 
 <body>
 
@@ -52,6 +104,8 @@ include "db_connect.php";
                         <div class="page-header">
                             <div class="page-title">
                                 <h1><span>Item Register</span></h1>
+      <a href="ItemRegister_view.php"><button type="button" class="btn btn-primary">View List</button></a>
+
                             </div>
                         </div>
                     </div><!-- /# column -->
@@ -71,7 +125,9 @@ include "db_connect.php";
     <div class="row"style="" >
         <div class="col-sm-6 col-md-6 col-lg-6">
           <label>Item Name</label>
-            <select name="itemname" id="itemname" class="form-control" onchange="openbox()">
+        <input type="text" name="itemname" id="itemname" class="form-control" >
+
+       <!--      <select name="itemname" id="itemname" class="form-control" onchange="openbox()">
                                                                   
                                                   <option  selected="selected">- Please Select -</option>
                                                   <?php
@@ -80,11 +136,11 @@ include "db_connect.php";
                                                         ?><option value = "<?php echo $row_inv['id'];?>" ><?php echo$row_inv['itemName'];?></option><?php
                                                     }
                                                   ?>
-                                                </select>
+                                                </select> -->
       </div>
       <div class="col-sm-6 col-md-6 col-lg-6">
         <label>Item Code</label>
-        <input type="text" name="icode" id="icode" class="form-control" readonly>
+        <input type="text" name="icode" id="icode" class="form-control" value="<?php echo $itemcode ?>" readonly>
       </div>
 
 </div>
@@ -111,7 +167,7 @@ include "db_connect.php";
 </div>
     <div class="row"style="margin-top: 2%;" align="center" >
         <div class="col-sm-4 col-md-4 col-lg-4" align="center">
-      <button type="button" class="btn btn-success">SUBMIT</button>
+      <button type="button" class="btn btn-success" onclick="submitdet()">SUBMIT</button>
 
        </div>
  

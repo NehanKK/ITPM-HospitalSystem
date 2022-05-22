@@ -69,7 +69,7 @@ function getXmlHttpRequestObject() {
                     if (req.readyState == 4) { //data is retrieved from server
                         if (req.status == 200) { // which reprents ok status 
                            if (req.responseText=='yes') {
-                            window.location.href = "http://localhost/ITPM-HospitalSystem-main/Sprint2_sourcefile_hospitalmanagement/dashboard.php";
+                            window.location.href = "http://localhost/Sprint2_sourcefile_hospitalmanagement/dashboard.php";
                            }else{
                             alert(req.responseText);
                            }
